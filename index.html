@@ -1,0 +1,534 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.site { background: #0A0A0F; color: #F0F0F5; font-family: 'Space Grotesk', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 32px; border-bottom: 1px solid rgba(255,255,255,0.06); position: sticky; top: 0; background: rgba(10,10,15,0.92); backdrop-filter: blur(12px); z-index: 10; }
+.nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 0.12em; color: #FF2D55; text-transform: uppercase; }
+.logo-dot { width: 8px; height: 8px; border-radius: 50%; background: #FF2D55; animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.nav-tabs { display: flex; gap: 0; }
+.nav-tab { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(240,240,245,0.4); padding: 8px 16px; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; font-weight: 500; }
+.nav-tab.active { color: #F0F0F5; border-bottom-color: #FF2D55; }
+.nav-tab:hover { color: rgba(240,240,245,0.8); }
+
+.section { display: none; }
+.section.active { display: block; }
+
+/* HERO */
+.hero { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 64px 32px 48px; text-align: center; }
+.hero-eyebrow { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: #7C3AED; text-transform: uppercase; margin-bottom: 24px; }
+.hero-title { font-size: 52px; font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; max-width: 600px; margin-bottom: 16px; }
+.hero-title span { color: #FF2D55; }
+.hero-sub { font-size: 16px; color: rgba(240,240,245,0.5); max-width: 480px; line-height: 1.7; margin-bottom: 48px; }
+.sos-wrap { position: relative; margin-bottom: 56px; }
+.sos-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 130px; height: 130px; border-radius: 50%; border: 2px solid rgba(255,45,85,0.3); animation: ring-out 2.2s infinite; }
+.sos-ring2 { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 160px; height: 160px; border-radius: 50%; border: 1px solid rgba(255,45,85,0.15); animation: ring-out 2.2s 0.6s infinite; }
+@keyframes ring-out { 0%{transform:translate(-50%,-50%) scale(0.85);opacity:0.8;} 100%{transform:translate(-50%,-50%) scale(1.3);opacity:0;} }
+.sos-btn { position: relative; width: 100px; height: 100px; border-radius: 50%; background: #FF2D55; border: none; color: white; font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; letter-spacing: 0.08em; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 0 40px rgba(255,45,85,0.4); display: flex; align-items: center; justify-content: center; }
+.sos-btn:hover { transform: scale(1.06); box-shadow: 0 0 60px rgba(255,45,85,0.6); }
+.sos-btn:active { transform: scale(0.96); }
+.stats-bar { display: flex; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; width: 100%; max-width: 500px; }
+.stat-item { flex: 1; padding: 16px 20px; text-align: center; border-right: 1px solid rgba(255,255,255,0.08); }
+.stat-item:last-child { border-right: none; }
+.stat-n { font-size: 24px; font-weight: 700; }
+.stat-n.red { color: #FF2D55; }
+.stat-n.purple { color: #7C3AED; }
+.stat-l { font-size: 10px; letter-spacing: 0.1em; color: rgba(240,240,245,0.4); text-transform: uppercase; margin-top: 2px; }
+
+/* EQUIPE */
+.team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; padding: 32px; }
+.member-card { background: #1A1A24; border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 24px 20px; text-align: center; transition: border-color 0.2s, transform 0.2s; }
+.member-card:hover { border-color: rgba(124,58,237,0.5); transform: translateY(-3px); }
+.member-card.you { border-color: rgba(255,45,85,0.4); }
+.m-avatar { width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; }
+.av-r{background:rgba(255,45,85,0.15);color:#FF2D55;} .av-b{background:rgba(56,109,221,0.15);color:#5B8DEF;} .av-t{background:rgba(16,158,117,0.15);color:#1DBA87;} .av-c{background:rgba(239,77,77,0.15);color:#EF7070;} .av-p{background:rgba(124,58,237,0.15);color:#7C3AED;}
+.m-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.m-you { font-size: 10px; letter-spacing: 0.1em; color: #FF2D55; text-transform: uppercase; font-family: 'Space Mono', monospace; margin-bottom: 8px; }
+.m-role { font-size: 12px; color: rgba(240,240,245,0.45); line-height: 1.5; }
+.grace-note { margin: 0 32px 32px; background: linear-gradient(135deg,rgba(124,58,237,0.1),rgba(124,58,237,0.04)); border: 1px solid rgba(124,58,237,0.3); border-radius: 12px; padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start; }
+.grace-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.grace-txt { font-size: 13px; color: rgba(240,240,245,0.55); line-height: 1.6; }
+
+/* PHASES */
+.phases-wrap { padding: 32px; }
+.phase-block { margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; overflow: hidden; }
+.phase-head { display: flex; align-items: center; gap: 14px; padding: 18px 22px; background: #1A1A24; cursor: pointer; transition: background 0.15s; }
+.phase-head:hover { background: #1E1E2A; }
+.phase-num { font-family: 'Space Mono', monospace; font-size: 11px; color: rgba(240,240,245,0.3); letter-spacing: 0.1em; width: 28px; }
+.phase-name-txt { font-size: 15px; font-weight: 600; flex: 1; }
+.phase-badge { font-size: 10px; font-family: 'Space Mono', monospace; letter-spacing: 0.08em; border-radius: 999px; padding: 4px 12px; text-transform: uppercase; }
+.badge-red{background:rgba(255,45,85,0.15);color:#FF2D55;} .badge-purple{background:rgba(124,58,237,0.15);color:#7C3AED;} .badge-gray{background:rgba(255,255,255,0.07);color:rgba(240,240,245,0.4);}
+.phase-chev { font-size: 14px; color: rgba(240,240,245,0.3); transition: transform 0.2s; }
+.phase-chev.open { transform: rotate(180deg); }
+.tasks-bg { background: #111118; }
+.task-item { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; padding: 16px 22px; border-top: 1px solid rgba(255,255,255,0.05); }
+.task-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.task-desc { font-size: 12px; color: rgba(240,240,245,0.4); line-height: 1.6; }
+.task-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.assignee { font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(240,240,245,0.4); letter-spacing: 0.05em; text-align: right; }
+.pct-bar { width: 80px; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+.pct-fill { height: 100%; border-radius: 2px; }
+.pct-green{background:#1DBA87;} .pct-yellow{background:#F59E0B;} .pct-empty{background:rgba(255,255,255,0.1);}
+.pct-label { font-size: 10px; font-family: 'Space Mono', monospace; color: rgba(240,240,245,0.3); }
+.coming { padding: 32px 22px; text-align: center; color: rgba(240,240,245,0.2); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Space Mono', monospace; }
+
+/* OUTILS */
+.tools-wrap { padding: 32px; }
+.tools-group-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: rgba(240,240,245,0.3); text-transform: uppercase; margin-bottom: 12px; margin-top: 24px; }
+.tools-group-label:first-child { margin-top: 0; }
+.tools-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 8px; }
+.tool-chip { background: #1A1A24; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 14px 16px; transition: border-color 0.2s; }
+.tool-chip:hover { border-color: rgba(124,58,237,0.4); }
+.tool-chip-icon { font-size: 18px; color: rgba(240,240,245,0.5); margin-bottom: 8px; }
+.tool-chip-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.tool-chip-use { font-size: 11px; color: rgba(240,240,245,0.4); line-height: 1.4; }
+
+/* DOCS PAGE */
+.docs-wrap { padding: 32px; }
+.docs-hero { margin-bottom: 32px; }
+.docs-hero-title { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
+.docs-hero-sub { font-size: 14px; color: rgba(240,240,245,0.4); }
+
+.member-section { margin-bottom: 28px; }
+.member-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.m-av-sm { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.member-info-name { font-size: 15px; font-weight: 600; }
+.member-info-role { font-size: 11px; color: rgba(240,240,245,0.4); margin-top: 1px; }
+.chef-badge { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(255,45,85,0.15); color: #FF2D55; border: 1px solid rgba(255,45,85,0.3); border-radius: 999px; padding: 3px 10px; margin-left: 6px; }
+
+.doc-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.doc-card { background: #1A1A24; border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.2s, transform 0.15s; }
+.doc-card:hover { border-color: rgba(124,58,237,0.4); transform: translateY(-2px); }
+.doc-card-top { display: flex; align-items: flex-start; gap: 10px; }
+.doc-icon { font-size: 22px; flex-shrink: 0; }
+.doc-title { font-size: 13px; font-weight: 600; line-height: 1.4; color: #F0F0F5; }
+.doc-meta { font-size: 11px; color: rgba(240,240,245,0.35); }
+.doc-btn { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; font-family: 'Space Grotesk', sans-serif; cursor: pointer; border: none; text-decoration: none; transition: opacity 0.15s, transform 0.15s; letter-spacing: 0.02em; }
+.doc-btn:hover { opacity: 0.85; transform: scale(0.98); }
+.btn-pdf { background: rgba(255,45,85,0.15); color: #FF2D55; border: 1px solid rgba(255,45,85,0.3); }
+.btn-link { background: rgba(124,58,237,0.15); color: #A78BFA; border: 1px solid rgba(124,58,237,0.3); }
+.btn-soon { background: rgba(255,255,255,0.05); color: rgba(240,240,245,0.3); border: 1px solid rgba(255,255,255,0.08); cursor: default; }
+.btn-green { background: rgba(29,186,135,0.12); color: #1DBA87; border: 1px solid rgba(29,186,135,0.3); }
+
+.resources-section { margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); }
+.res-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #F0F0F5; }
+.res-desc { font-size: 11px; color: rgba(240,240,245,0.4); margin-bottom: 12px; line-height: 1.5; }
+</style>
+
+<div class="site">
+  <nav class="nav">
+    <div class="nav-logo"><div class="logo-dot"></div>App·Sécu·01</div>
+    <div class="nav-tabs">
+      <div class="nav-tab active" onclick="showSection('home',this)">Projet</div>
+      <div class="nav-tab" onclick="showSection('equipe',this)">Équipe</div>
+      <div class="nav-tab" onclick="showSection('phases',this)">Tâches</div>
+      <div class="nav-tab" onclick="showSection('outils',this)">Outils</div>
+      <div class="nav-tab" onclick="showSection('docs',this)">Documents</div>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <div id="home" class="section active">
+    <div class="hero">
+      <div class="hero-eyebrow">Application 1 · Gabon · 2026</div>
+      <h1 class="hero-title">Protéger,<br><span>alerter</span>,<br>sauver.</h1>
+      <p class="hero-sub">Une application mobile de lutte contre les agressions — bouton SOS, contacts de confiance, géolocalisation instantanée.</p>
+      <div class="sos-wrap">
+        <div class="sos-ring"></div><div class="sos-ring2"></div>
+        <button class="sos-btn" onclick="sosTap()">SOS</button>
+      </div>
+      <div class="stats-bar">
+        <div class="stat-item"><div class="stat-n">5</div><div class="stat-l">membres</div></div>
+        <div class="stat-item"><div class="stat-n red">8</div><div class="stat-l">tâches</div></div>
+        <div class="stat-item"><div class="stat-n purple">56%</div><div class="stat-l">avancement</div></div>
+        <div class="stat-item"><div class="stat-n">3</div><div class="stat-l">phases</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EQUIPE -->
+  <div id="equipe" class="section">
+    <div class="team-grid">
+      <div class="member-card you">
+        <div class="m-avatar av-r">CO</div>
+        <div class="m-you">Chef de projet</div>
+        <div class="m-name">Coeurly</div>
+        <div class="m-role">Recherche, sécurité des données, documentation & scénarios</div>
+      </div>
+      <div class="member-card">
+        <div class="m-avatar av-b">GA</div>
+        <div class="m-name">Gatlin</div>
+        <div class="m-role">Architecture technique, backend, infrastructure serveur</div>
+      </div>
+      <div class="member-card">
+        <div class="m-avatar av-t">GR</div>
+        <div class="m-name">Grace</div>
+        <div class="m-role">UX/UI Figma, fonctionnalités, lien avec expert tech (Russie)</div>
+      </div>
+      <div class="member-card">
+        <div class="m-avatar av-c">OR</div>
+        <div class="m-name">Orphé</div>
+        <div class="m-role">UX/UI Figma, définition des fonctionnalités principales</div>
+      </div>
+      <div class="member-card">
+        <div class="m-avatar av-p">AN</div>
+        <div class="m-name">Angel</div>
+        <div class="m-role">Recherche, analyse existant, sécurité & scénarios techniques</div>
+      </div>
+    </div>
+    <div class="grace-note">
+      <i class="ti ti-stars" style="font-size:24px;color:#7C3AED;flex-shrink:0;margin-top:2px;" aria-hidden="true"></i>
+      <div>
+        <div class="grace-title">Coup de pouce externe</div>
+        <div class="grace-txt">Grace a un entretien avec son responsable technique basé en Russie. Elle souhaite lui proposer ce projet comme projet personnel encadré — un renfort précieux pour la phase développement.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASES -->
+  <div id="phases" class="section">
+    <div class="phases-wrap">
+      <div class="phase-block">
+        <div class="phase-head" onclick="togglePhase(this)">
+          <span class="phase-num">01</span>
+          <span class="phase-name-txt">Phase théorique</span>
+          <span class="phase-badge badge-red">En cours</span>
+          <i class="ti ti-chevron-down phase-chev open" aria-hidden="true"></i>
+        </div>
+        <div class="tasks-bg">
+          <div class="task-item"><div><div class="task-title">Définition du problème</div><div class="task-desc">Comprendre les enlèvements, définir l'objectif, identifier les utilisateurs, périmètre fonctionnel.</div></div><div class="task-right"><span class="assignee">Tout le monde</span><div class="pct-bar"><div class="pct-fill pct-green" style="width:100%"></div></div><span class="pct-label">100%</span></div></div>
+          <div class="task-item"><div><div class="task-title">Recherche d'applications existantes</div><div class="task-desc">Bonnes pratiques, failles potentielles, protection des données.</div></div><div class="task-right"><span class="assignee">Angel, Coeurly</span><div class="pct-bar"><div class="pct-fill pct-yellow" style="width:50%"></div></div><span class="pct-label">50%</span></div></div>
+          <div class="task-item"><div><div class="task-title">Définition des fonctionnalités</div><div class="task-desc">Bouton SOS, contacts de confiance, alertes, gestion utilisateurs, mode discret.</div></div><div class="task-right"><span class="assignee">Grace, Orphé</span><div class="pct-bar"><div class="pct-fill pct-green" style="width:100%"></div></div><span class="pct-label">100%</span></div></div>
+          <div class="task-item"><div><div class="task-title">Architecture globale</div><div class="task-desc">Type serveur, comm app ↔ serveur, base de données, contraintes réseau Gabon.</div></div><div class="task-right"><span class="assignee">Gatlin</span><div class="pct-bar"><div class="pct-fill pct-green" style="width:100%"></div></div><span class="pct-label">100%</span></div></div>
+        </div>
+      </div>
+      <div class="phase-block">
+        <div class="phase-head" onclick="togglePhase(this)">
+          <span class="phase-num">02</span>
+          <span class="phase-name-txt">Phase technique</span>
+          <span class="phase-badge badge-purple">À venir</span>
+          <i class="ti ti-chevron-down phase-chev open" aria-hidden="true"></i>
+        </div>
+        <div class="tasks-bg">
+          <div class="task-item"><div><div class="task-title">Maquettes UX/UI complètes</div><div class="task-desc">Inscription, connexion, écran SOS, contacts, historique alertes, paramètres. Prototype cliquable sur Figma.</div></div><div class="task-right"><span class="assignee">Grace, Orphé</span><div class="pct-bar"><div class="pct-fill pct-empty" style="width:0%"></div></div><span class="pct-label">0%</span></div></div>
+          <div class="task-item"><div><div class="task-title">Architecture technique détaillée</div><div class="task-desc">Node.js + Express, PostgreSQL, Flutter, API REST. Schéma Draw.io.</div></div><div class="task-right"><span class="assignee">Gatlin</span><div class="pct-bar"><div class="pct-fill pct-empty" style="width:0%"></div></div><span class="pct-label">0%</span></div></div>
+          <div class="task-item"><div><div class="task-title">Scénario technique d'une alerte</div><div class="task-desc">Doc complet : SOS → GPS → serveur → backend → notification contacts.</div></div><div class="task-right"><span class="assignee">Angel, Coeurly</span><div class="pct-bar"><div class="pct-fill pct-empty" style="width:0%"></div></div><span class="pct-label">0%</span></div></div>
+          <div class="task-item"><div><div class="task-title">Sécurité & protection des données</div><div class="task-desc">Authentification, hachage mots de passe (bcrypt), JWT, gestion accès.</div></div><div class="task-right"><span class="assignee">Angel, Coeurly</span><div class="pct-bar"><div class="pct-fill pct-empty" style="width:0%"></div></div><span class="pct-label">0%</span></div></div>
+        </div>
+      </div>
+      <div class="phase-block">
+        <div class="phase-head" style="cursor:default;">
+          <span class="phase-num">03</span>
+          <span class="phase-name-txt">Phase développement</span>
+          <span class="phase-badge badge-gray">À planifier</span>
+        </div>
+        <div class="coming">— à définir ensemble —</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTILS -->
+  <div id="outils" class="section">
+    <div class="tools-wrap">
+      <div class="tools-group-label">Design & maquettes</div>
+      <div class="tools-row">
+        <div class="tool-chip"><div class="tool-chip-icon"><i class="ti ti-vector" aria-hidden="true"></i></div><div class="tool-chip-name">Figma</div><div class="tool-chip-use">Maquettes UX/UI et prototypes cliquables</div></div>
+        <div class="tool-chip"><div class="tool-chip-icon"><i class="ti ti-topology-star" aria-hidden="true"></i></div><div class="tool-chip-name">Draw.io</div><div class="tool-chip-use">Schéma d'architecture système</div></div>
+      </div>
+      <div class="tools-group-label">Backend & base de données</div>
+      <div class="tools-row">
+        <div class="tool-chip"><div class="tool-chip-icon"><i class="ti ti-brand-nodejs" aria-hidden="true"></i></div><div class="tool-chip-name">Node.js + Express</div><div class="tool-chip-use">API REST, logique serveur</div></div>
+        <div class="tool-chip"><div class="tool-chip-icon"><i class="ti ti-database" aria-hidden="true"></i></div><div class="tool-chip-name">PostgreSQL</div><div class="tool-chip-use">Base de données principale</div></div>
+        <div class="tool-chip"><div class="tool-chip-icon"><i class="ti ti-lock" aria-hidden="true"></i></div><div class="tool-chip-name">bcrypt + JWT</div><div class="tool-chip-use">Sécurité, auth, tokens</div></div>
+      </div>
+      <div class="tools-group-label">Application mobile</div>
+      <div class="tools-row">
+        <div class="tool-chip"><div class="tool-chip-icon"><i class="ti ti-device-mobile" aria-hidden="true"></i></div><div class="tool-chip-name">Flutter</div><div class="tool-chip-use">App mobile Android & iOS</div></div>
+        <div class="tool-chip"><div class="tool-chip-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div><div class="tool-chip-name">API GPS</div><div class="tool-chip-use">Géolocalisation lors d'une alerte</div></div>
+        <div class="tool-chip"><div class="tool-chip-icon"><i class="ti ti-bell" aria-hidden="true"></i></div><div class="tool-chip-name">Firebase / APNs</div><div class="tool-chip-use">Notifications push aux contacts</div></div>
+      </div>
+      <div class="tools-group-label">Collaboration & documentation</div>
+      <div class="tools-row">
+        <div class="tool-chip"><div class="tool-chip-icon"><i class="ti ti-brand-github" aria-hidden="true"></i></div><div class="tool-chip-name">Git + GitHub</div><div class="tool-chip-use">Versionnement du code</div></div>
+        <div class="tool-chip"><div class="tool-chip-icon"><i class="ti ti-file-text" aria-hidden="true"></i></div><div class="tool-chip-name">Google Docs / Word</div><div class="tool-chip-use">Docs techniques et scénarios</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOCUMENTS -->
+  <div id="docs" class="section">
+    <div class="docs-wrap">
+      <div class="docs-hero">
+        <div class="docs-hero-title">Documents du projet</div>
+        <div class="docs-hero-sub">Tous les livrables produits par l'équipe — clique sur un bouton pour ouvrir le document.</div>
+      </div>
+
+      <!-- COEURLY -->
+      <div class="member-section">
+        <div class="member-header">
+          <div class="m-av-sm av-r">CO</div>
+          <div>
+            <div class="member-info-name">Coeurly <span class="chef-badge">Chef de projet</span></div>
+            <div class="member-info-role">Recherche · Sécurité · Documentation</div>
+          </div>
+        </div>
+        <div class="doc-cards">
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <span class="doc-icon">📄</span>
+              <div>
+                <div class="doc-title">Tâche 1 — Définition du problème</div>
+                <div class="doc-meta">PDF · Phase théorique</div>
+              </div>
+            </div>
+            <a class="doc-btn btn-pdf" href="#" onclick="openPDF('Tache1_Coeurly')">
+              <i class="ti ti-file-download" aria-hidden="true"></i> Ouvrir le PDF
+            </a>
+          </div>
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <span class="doc-icon">📄</span>
+              <div>
+                <div class="doc-title">Tâche 2 — Applications existantes</div>
+                <div class="doc-meta">PDF · Phase théorique</div>
+              </div>
+            </div>
+            <a class="doc-btn btn-pdf" href="#" onclick="openPDF('Tache2_Coeurly')">
+              <i class="ti ti-file-download" aria-hidden="true"></i> Ouvrir le PDF
+            </a>
+          </div>
+          <div class="doc-card" style="border-style:dashed; border-color:rgba(255,45,85,0.2);">
+            <div class="doc-card-top">
+              <span class="doc-icon">📊</span>
+              <div>
+                <div class="doc-title">Diagramme de Gantt</div>
+                <div class="doc-meta">ODS · Planning général</div>
+              </div>
+            </div>
+            <a class="doc-btn btn-pdf" href="#" onclick="openPDF('Diagramme_de_Gantt_Application__6_')">
+              <i class="ti ti-file-download" aria-hidden="true"></i> Ouvrir le fichier
+            </a>
+          </div>
+        </div>
+
+        <!-- Ressources chef de projet -->
+        <div class="resources-section">
+          <div style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.15em; color:rgba(240,240,245,0.3); text-transform:uppercase; margin-bottom:16px;">Ressources complémentaires · Chef de projet</div>
+          <div class="doc-cards">
+            <div class="doc-card">
+              <div class="doc-card-top">
+                <span class="doc-icon">📋</span>
+                <div>
+                  <div class="doc-title">Template cahier des charges</div>
+                  <div class="doc-meta">Notion · Modèle structuré</div>
+                </div>
+              </div>
+              <a class="doc-btn btn-link" href="https://www.notion.so/templates/product-requirements-document" target="_blank">
+                <i class="ti ti-external-link" aria-hidden="true"></i> Ouvrir
+              </a>
+            </div>
+            <div class="doc-card">
+              <div class="doc-card-top">
+                <span class="doc-icon">🗂️</span>
+                <div>
+                  <div class="doc-title">Guide gestion de projet agile</div>
+                  <div class="doc-meta">Atlassian · Méthodologie</div>
+                </div>
+              </div>
+              <a class="doc-btn btn-link" href="https://www.atlassian.com/fr/agile/project-management" target="_blank">
+                <i class="ti ti-external-link" aria-hidden="true"></i> Ouvrir
+              </a>
+            </div>
+            <div class="doc-card">
+              <div class="doc-card-top">
+                <span class="doc-icon">🔐</span>
+                <div>
+                  <div class="doc-title">RGPD — Guide développeurs</div>
+                  <div class="doc-meta">CNIL · Protection des données</div>
+                </div>
+              </div>
+              <a class="doc-btn btn-link" href="https://www.cnil.fr/fr/guide-rgpd-du-developpeur" target="_blank">
+                <i class="ti ti-external-link" aria-hidden="true"></i> Ouvrir
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GATLIN -->
+      <div class="member-section">
+        <div class="member-header">
+          <div class="m-av-sm av-b">GA</div>
+          <div>
+            <div class="member-info-name">Gatlin</div>
+            <div class="member-info-role">Architecture · Backend · Infrastructure</div>
+          </div>
+        </div>
+        <div class="doc-cards">
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <span class="doc-icon">📄</span>
+              <div>
+                <div class="doc-title">Tâche 1 — Architecture globale</div>
+                <div class="doc-meta">PDF · Phase théorique · ✅ 100%</div>
+              </div>
+            </div>
+            <a class="doc-btn btn-pdf" href="#" onclick="openPDF('Tache1_Gatlin')">
+              <i class="ti ti-file-download" aria-hidden="true"></i> Ouvrir le PDF
+            </a>
+          </div>
+          <div class="doc-card" style="border-style:dashed;">
+            <div class="doc-card-top">
+              <span class="doc-icon">🗺️</span>
+              <div>
+                <div class="doc-title">Schéma Draw.io</div>
+                <div class="doc-meta">Lien à ajouter</div>
+              </div>
+            </div>
+            <button class="doc-btn btn-soon" disabled>
+              <i class="ti ti-link" aria-hidden="true"></i> Lien à venir
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRACE -->
+      <div class="member-section">
+        <div class="member-header">
+          <div class="m-av-sm av-t">GR</div>
+          <div>
+            <div class="member-info-name">Grace</div>
+            <div class="member-info-role">UX/UI · Fonctionnalités · Expert externe</div>
+          </div>
+        </div>
+        <div class="doc-cards">
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <span class="doc-icon">📄</span>
+              <div>
+                <div class="doc-title">Applications existantes — Analyse</div>
+                <div class="doc-meta">PDF · Phase théorique</div>
+              </div>
+            </div>
+            <a class="doc-btn btn-pdf" href="#" onclick="openPDF('Grace_Ndong_aplli_existantes')">
+              <i class="ti ti-file-download" aria-hidden="true"></i> Ouvrir le PDF
+            </a>
+          </div>
+          <div class="doc-card" style="border-style:dashed;">
+            <div class="doc-card-top">
+              <span class="doc-icon">🎨</span>
+              <div>
+                <div class="doc-title">Maquettes Figma</div>
+                <div class="doc-meta">En cours de création</div>
+              </div>
+            </div>
+            <button class="doc-btn btn-soon" disabled>
+              <i class="ti ti-clock" aria-hidden="true"></i> Pas encore fait
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORPHE -->
+      <div class="member-section">
+        <div class="member-header">
+          <div class="m-av-sm av-c">OR</div>
+          <div>
+            <div class="member-info-name">Orphé</div>
+            <div class="member-info-role">UX/UI · Fonctionnalités · Recherche</div>
+          </div>
+        </div>
+        <div class="doc-cards">
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <span class="doc-icon">📄</span>
+              <div>
+                <div class="doc-title">Applications existantes — Analyse</div>
+                <div class="doc-meta">PDF · Phase théorique</div>
+              </div>
+            </div>
+            <a class="doc-btn btn-pdf" href="#" onclick="openPDF('Orphe_applications_existantes')">
+              <i class="ti ti-file-download" aria-hidden="true"></i> Ouvrir le PDF
+            </a>
+          </div>
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <span class="doc-icon">📄</span>
+              <div>
+                <div class="doc-title">Recherches complémentaires</div>
+                <div class="doc-meta">PDF · Phase théorique</div>
+              </div>
+            </div>
+            <a class="doc-btn btn-pdf" href="#" onclick="openPDF('Recherches_Orphe')">
+              <i class="ti ti-file-download" aria-hidden="true"></i> Ouvrir le PDF
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANGEL -->
+      <div class="member-section">
+        <div class="member-header">
+          <div class="m-av-sm av-p">AN</div>
+          <div>
+            <div class="member-info-name">Angel</div>
+            <div class="member-info-role">Recherche · Sécurité · Scénarios</div>
+          </div>
+        </div>
+        <div class="doc-cards">
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <span class="doc-icon">📄</span>
+              <div>
+                <div class="doc-title">Tâche 2 — Applications existantes</div>
+                <div class="doc-meta">PDF · Phase théorique</div>
+              </div>
+            </div>
+            <a class="doc-btn btn-pdf" href="#" onclick="openPDF('Tache_2_Angel')">
+              <i class="ti ti-file-download" aria-hidden="true"></i> Ouvrir le PDF
+            </a>
+          </div>
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <span class="doc-icon">📄</span>
+              <div>
+                <div class="doc-title">Tâche 3 — Fonctionnalités</div>
+                <div class="doc-meta">PDF · Phase théorique</div>
+              </div>
+            </div>
+            <a class="doc-btn btn-pdf" href="#" onclick="openPDF('Tache_3_Angel')">
+              <i class="ti ti-file-download" aria-hidden="true"></i> Ouvrir le PDF
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function showSection(id, tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  tab.classList.add('active');
+}
+function togglePhase(head) {
+  const body = head.nextElementSibling;
+  const chev = head.querySelector('.phase-chev');
+  const isOpen = !body.style.display || body.style.display === '';
+  body.style.display = isOpen ? 'none' : '';
+  chev.classList.toggle('open', !isOpen);
+}
+function sosTap() {
+  const btn = document.querySelector('.sos-btn');
+  btn.style.background = '#fff'; btn.style.color = '#FF2D55';
+  setTimeout(() => { btn.style.background = '#FF2D55'; btn.style.color = '#fff'; }, 400);
+}
+function openPDF(name) {
+  alert('📎 Pour lier ce bouton à ton fichier réel, envoie-moi le lien Google Drive ou Dropbox du fichier "' + name + '".');
+}
+</script>
